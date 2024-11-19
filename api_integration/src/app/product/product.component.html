@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row mt-4 align-items-center">
+    <div class="col-8">
+      <h1 class="text-center">Our Products</h1>
+    </div>
+    <div class="col-4">
+      <form class="d-flex" (ngSubmit)="searchProducts()" role="search">
+        <input [(ngModel)]="searchQuery" name="searchQuery" class="form-control me-2" type="search" placeholder="Search by Product or Brand" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <!-- Display 'No products found' message if no results -->
+    <div *ngIf="myProducts.length === 0" class="col-12">
+      <p class="text-center">No products found</p>
+    </div>
+
+    <!-- Product listing -->
+    <ng-container>
+      @for(item of myProducts; track $index){
+      <div  class="col-lg-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ item.name }}</h5>
+            <p class="card-text">{{ item.description }}</p>
+            <p class="card-text"><strong>Brand:</strong> {{ item.brands.name }}</p>
+            <a href="#" class="btn btn-primary">$ {{ item.price }}</a>
+            
+            <!-- Using Bootstrap margin utility classes for spacing -->
+            <a href="#" class="btn btn-primary ms-2" [routerLink]="['/editproduct',item.id]">Edit</a> <!-- ms-2 adds margin-left -->
+            <a class="btn btn-danger ms-2" (click)="DeleteProduct(item)">Delete</a> <!-- ms-2 adds margin-left -->
+          </div>
+        </div>
+      </div>
+    }
+    </ng-container>
+  </div>
+</div>
